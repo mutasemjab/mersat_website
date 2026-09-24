@@ -69,3 +69,42 @@ if(cform){
     btn.disabled=false;btn.textContent=cform.dataset.label;
   });
 }
+
+/* VIDEOS THAT CAN'T LOAD (missing file, blocked link) get hidden so the image behind them shows */
+document.querySelectorAll('video').forEach(v=>{
+  const srcs=v.querySelectorAll('source');
+  const fail=()=>v.classList.add('failed');
+  if(srcs.length)srcs[srcs.length-1].addEventListener('error',fail);
+  else if(v.getAttribute('src'))v.addEventListener('error',fail);
+});
+
+/* WORLD MAP: hovering a location lights its country and pin */
+const wmap=document.querySelector('.world-map-svg');
+if(wmap){
+  document.querySelectorAll('.g-loc[data-cc]').forEach(loc=>{
+    const els=wmap.querySelectorAll('[data-cc="'+loc.dataset.cc+'"]');
+    loc.addEventListener('mouseenter',()=>els.forEach(el=>el.classList.add('hl')));
+    loc.addEventListener('mouseleave',()=>els.forEach(el=>el.classList.remove('hl')));
+  });
+}
+
+/* CLIENT GALLERY LIGHTBOX */
+const lb=document.getElementById('lightbox');
+if(lb){
+  const imgs=[...document.querySelectorAll('.cg-img')],pic=lb.querySelector('img');
+  let cur=0;
+  const show=i=>{cur=(i+imgs.length)%imgs.length;pic.src=imgs[cur].dataset.full;};
+  const close=()=>{lb.hidden=true;document.body.style.overflow='';};
+  imgs.forEach((b,i)=>b.addEventListener('click',()=>{show(i);lb.hidden=false;document.body.style.overflow='hidden';}));
+  lb.querySelector('.lb-close').addEventListener('click',close);
+  lb.querySelector('.lb-prev').addEventListener('click',()=>show(cur-1));
+  lb.querySelector('.lb-next').addEventListener('click',()=>show(cur+1));
+  lb.addEventListener('click',e=>{if(e.target===lb)close();});
+  lb.querySelectorAll('.lb-prev,.lb-next').forEach(b=>b.hidden=imgs.length<2);
+  document.addEventListener('keydown',e=>{
+    if(lb.hidden)return;
+    if(e.key==='Escape')close();
+    if(e.key==='ArrowLeft')show(cur-1);
+    if(e.key==='ArrowRight')show(cur+1);
+  });
+}

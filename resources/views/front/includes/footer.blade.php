@@ -6,7 +6,7 @@
   <div class="footer-main">
     <!-- LEFT -->
     <div class="f-brand">
-      @include('front.partials.logo', ['style' => 'height:46px;filter:brightness(0) invert(1);margin-bottom:1.2rem;display:block;'])
+      @include('front.partials.logo', ['style' => 'height:46px;margin-bottom:1.2rem;display:block;'])
       <h4>{{ setting('footer_title') }}</h4>
       <small>{{ setting('footer_subtitle') }}</small>
     </div>

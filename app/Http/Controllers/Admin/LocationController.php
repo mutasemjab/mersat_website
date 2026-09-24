@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Location;
+use App\Support\WorldMap;
+use Illuminate\Validation\Rule;
 
 class LocationController extends BaseCrudController
 {
@@ -13,7 +15,7 @@ class LocationController extends BaseCrudController
     protected string $plural = 'locations';
     protected string $singular = 'location';
 
-    protected array $columns = ['city', 'description', 'sort_order', 'status'];
+    protected array $columns = ['city', 'country_code', 'description', 'sort_order', 'status'];
 
     protected array $translatableRules = [
         'city'        => 'required|string|max:100',
@@ -22,6 +24,6 @@ class LocationController extends BaseCrudController
 
     protected function rules(): array
     {
-        return [];
+        return ['country_code' => ['required', Rule::in(array_keys(WorldMap::data()['countries']))]];
     }
 }

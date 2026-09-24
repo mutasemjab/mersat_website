@@ -11,4 +11,5 @@
     <div class="text-muted small" dir="rtl">{{ $item->getTranslation('title', 'ar', false) }}</div>
 </td>
 <td class="text-muted small">{{ $item->getTranslation('tag', 'en', false) }}</td>
+<td><span class="pill pill-info"><i class="bi bi-images"></i> {{ $item->media()->count() }}</span></td>
 @include('admin.crud._status')

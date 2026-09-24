@@ -1,6 +1,8 @@
 @php
     $otherLocale = app()->getLocale() === 'ar' ? 'en' : 'ar';
     $waDigits = preg_replace('/\D+/', '', (string) setting('contact_whatsapp'));
+    // Section links jump within the home page, or back to it from the other pages
+    $home = request()->routeIs('home') ? '' : route('home');
 @endphp
 
 <!-- LOADER -->
@@ -27,14 +29,14 @@
 <nav id="nav">
   <a href="{{ route('home') }}" class="nav-logo">@include('front.partials.logo')</a>
   <ul class="nav-links">
-    <li><a href="#services">{{ __('front.nav_services') }}</a></li>
-    <li><a href="#portfolio">{{ __('front.nav_portfolio') }}</a></li>
-    <li><a href="#about">{{ __('front.nav_about') }}</a></li>
-    <li><a href="#global">{{ __('front.nav_global') }}</a></li>
-    <li><a href="#contact">{{ __('front.nav_contact') }}</a></li>
+    <li><a href="{{ $home }}#services">{{ __('front.nav_services') }}</a></li>
+    <li><a href="{{ $home }}#portfolio">{{ __('front.nav_portfolio') }}</a></li>
+    <li><a href="{{ $home }}#about">{{ __('front.nav_about') }}</a></li>
+    <li><a href="{{ $home }}#global">{{ __('front.nav_global') }}</a></li>
+    <li><a href="{{ $home }}#contact">{{ __('front.nav_contact') }}</a></li>
   </ul>
   <div class="nav-right">
     <a href="{{ LaravelLocalization::getLocalizedURL($otherLocale, null, [], true) }}" class="nav-lang" hreflang="{{ $otherLocale }}" lang="{{ $otherLocale }}">{{ __('front.switch_language') }}</a>
-    <a href="#contact" class="nav-cta">{{ __('front.nav_cta') }}</a>
+    <a href="{{ $home }}#contact" class="nav-cta">{{ __('front.nav_cta') }}</a>
   </div>
 </nav>

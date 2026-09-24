@@ -6,6 +6,7 @@
 <!-- HERO -->
 <section id="hero">
   @php $heroVideo = setting_media('hero_video'); $heroPoster = setting_media('hero_poster'); @endphp
+  @if($heroPoster)<div class="hero-poster" style="background-image:url('{{ $heroPoster }}');"></div>@endif
   <video id="hero-vid" autoplay muted loop playsinline preload="auto" @if($heroPoster) poster="{{ $heroPoster }}" @endif>
     @if($heroVideo)<source src="{{ $heroVideo }}">@endif
   </video>
@@ -143,24 +144,16 @@
         <p class="sl r">{{ setting('portfolio_label') }}</p>
         <h2 class="st r d1">{{ setting('portfolio_title_1') }}<br><em>{{ setting('portfolio_title_2') }}</em></h2>
       </div>
-      <a href="{{ setting('portfolio_btn_url', '#contact') }}" class="btn-b r" style="font-size:11px;padding:11px 24px;">{{ setting('portfolio_btn_text') }}</a>
+      <a href="{{ route('portfolio.index') }}" class="btn-b r" style="font-size:11px;padding:11px 24px;">{{ setting('portfolio_btn_text') }}</a>
     </div>
   </div>
   <div class="port-grid" style="max-width:1260px;margin:0 auto;padding:0 5vw;">
     @foreach($portfolioItems as $work)
-    <div class="pg-item r {{ $loop->index % 5 ? 'd' . ($loop->index % 5) : '' }}">
-      <div class="pg-bg" style="background-image:url('{{ $work->image_url }}');"></div>
-      @if($work->video_url)
-      <video class="pg-vid" muted loop playsinline><source src="{{ $work->video_url }}"></video>
-      @endif
-      <div class="pg-cover"></div>
-      <div class="pg-info"><div class="pg-tag">{{ $work->tag }}</div><div class="pg-title">{{ $work->title }}</div></div>
-      <div class="pg-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      @if($work->url)
-      <a class="pg-link" href="{{ $work->url }}" aria-label="{{ $work->title }}"></a>
-      @endif
-    </div>
+      @include('front.partials.client-card')
     @endforeach
+  </div>
+  <div class="port-more r">
+    <a href="{{ route('portfolio.index') }}" class="btn-w">{{ __('front.view_more') }}</a>
   </div>
 </section>
 
@@ -184,10 +177,14 @@
     <div class="about-grid">
       <div class="r">
         @php $aboutVideo = setting_media('about_video'); $aboutPoster = setting_media('about_poster'); @endphp
+        {{-- The image is always there underneath; the video (if any) plays on top and hides itself if it can't load --}}
         <div class="about-vid-box">
-          <video autoplay muted loop playsinline preload="auto" @if($aboutPoster) poster="{{ $aboutPoster }}" @endif>
-            @if($aboutVideo)<source src="{{ $aboutVideo }}">@endif
+          @if($aboutPoster)<img class="about-img" src="{{ $aboutPoster }}" alt="{{ setting('about_label') }}">@endif
+          @if($aboutVideo)
+          <video class="media-fallback" autoplay muted loop playsinline preload="auto" @if($aboutPoster) poster="{{ $aboutPoster }}" @endif>
+            <source src="{{ $aboutVideo }}">
           </video>
+          @endif
           <div class="about-tag"><div class="big" dir="ltr">{{ setting('about_badge_number') }}</div><div class="sm">{{ setting('about_badge_line1') }}<br>{{ setting('about_badge_line2') }}</div></div>
         </div>
       </div>
@@ -244,79 +241,14 @@
       <p class="r d2">{{ setting('global_text') }}</p>
       <div class="global-locations r d3">
         @foreach($locations as $loc)
-        <div class="g-loc"><div class="g-loc-dot"></div><div><div class="g-loc-city">{{ $loc->city }}</div><div class="g-loc-country">{{ $loc->description }}</div></div></div>
+        <div class="g-loc" data-cc="{{ $loc->country_code }}"><div class="g-loc-dot"></div><div><div class="g-loc-city">{{ $loc->city }}</div><div class="g-loc-country">{{ $loc->description }}</div></div></div>
         @endforeach
       </div>
     </div>
 
-    <!-- Expanded world map with animated connections -->
+    <!-- World map: our countries light up -->
     <div class="world-map-wrap r d2">
-      <svg class="world-map-svg" viewBox="0 0 900 520" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="mg" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#c8a96e" stop-opacity=".6"/><stop offset="100%" stop-color="#c8a96e" stop-opacity="0"/></radialGradient>
-          <radialGradient id="mg2" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#c8a96e" stop-opacity=".35"/><stop offset="100%" stop-color="#c8a96e" stop-opacity="0"/></radialGradient>
-          <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        </defs>
-
-        <!-- Continents -->
-        <path d="M90 120 C115 95 185 83 210 108 C235 133 248 190 236 238 C224 285 188 308 163 332 C138 356 92 344 79 308 C66 272 79 210 79 172 C79 150 88 132 90 120Z" fill="rgba(200,169,110,.07)" stroke="rgba(200,169,110,.2)" stroke-width="1.2"/>
-        <path d="M195 338 C220 325 245 338 258 374 C271 410 264 470 246 494 C228 518 198 518 183 488 C168 458 173 395 185 366 C191 352 193 344 195 338Z" fill="rgba(200,169,110,.06)" stroke="rgba(200,169,110,.14)" stroke-width="1"/>
-        <path d="M400 95 C420 80 458 83 477 100 C496 118 496 148 483 166 C470 184 446 184 428 172 C410 160 398 133 398 115 C398 106 399 101 400 95Z" fill="rgba(200,169,110,.08)" stroke="rgba(200,169,110,.2)" stroke-width="1"/>
-        <path d="M422 178 C452 166 484 178 496 214 C508 250 502 328 484 374 C466 420 435 444 409 426 C383 408 376 350 382 298 C388 246 397 198 406 188 C412 181 418 177 422 178Z" fill="rgba(200,169,110,.07)" stroke="rgba(200,169,110,.18)" stroke-width="1"/>
-        <!-- Middle East — highlighted -->
-        <path d="M490 170 C510 158 536 163 543 188 C550 213 534 244 517 254 C500 264 482 244 480 222 C478 200 486 178 490 170Z" fill="rgba(200,169,110,.14)" stroke="rgba(200,169,110,.4)" stroke-width="1.8"/>
-        <!-- Asia -->
-        <path d="M540 92 C590 74 688 86 748 116 C796 140 820 188 808 232 C796 276 748 306 688 300 C628 294 564 266 540 226 C516 186 516 116 540 92Z" fill="rgba(200,169,110,.06)" stroke="rgba(200,169,110,.16)" stroke-width="1"/>
-        <!-- Arabian Peninsula -->
-        <path d="M510 200 C528 192 548 198 556 220 C564 242 555 275 540 285 C525 295 508 278 504 258 C500 238 504 208 510 200Z" fill="rgba(200,169,110,.1)" stroke="rgba(200,169,110,.28)" stroke-width="1.4"/>
-        <!-- Australia -->
-        <path d="M710 336 C740 320 772 328 782 358 C792 388 776 428 748 438 C720 448 696 422 696 392 C696 362 706 342 710 336Z" fill="rgba(200,169,110,.05)" stroke="rgba(200,169,110,.12)" stroke-width="1"/>
-
-        <!-- JORDAN pin -->
-        <ellipse cx="510" cy="210" rx="32" ry="10" fill="url(#mg)"/>
-        <circle cx="510" cy="210" r="12" fill="rgba(200,169,110,.2)" stroke="var(--accent)" stroke-width="2" filter="url(#glow)"/>
-        <circle cx="510" cy="210" r="5" fill="var(--accent)"/>
-        <line x1="510" y1="198" x2="510" y2="170" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="3 2"/>
-        <text x="520" y="167" fill="var(--accent)" font-size="12" font-family="sans-serif" font-weight="600">{{ __('front.map_jordan') }}</text>
-
-        <!-- MOROCCO pin -->
-        <ellipse cx="392" cy="225" rx="22" ry="8" fill="url(#mg2)"/>
-        <circle cx="392" cy="225" r="9" fill="rgba(200,169,110,.18)" stroke="var(--accent)" stroke-width="1.8"/>
-        <circle cx="392" cy="225" r="4" fill="var(--accent)"/>
-        <text x="350" y="245" fill="rgba(200,169,110,.8)" font-size="11" font-family="sans-serif" font-weight="600">{{ __('front.map_morocco') }}</text>
-
-        <!-- USA pin -->
-        <ellipse cx="155" cy="185" rx="22" ry="8" fill="url(#mg2)"/>
-        <circle cx="155" cy="185" r="9" fill="rgba(200,169,110,.18)" stroke="var(--accent)" stroke-width="1.8"/>
-        <circle cx="155" cy="185" r="4" fill="var(--accent)"/>
-        <text x="118" y="168" fill="rgba(200,169,110,.8)" font-size="11" font-family="sans-serif" font-weight="600">{{ __('front.map_usa') }}</text>
-
-        <!-- SAUDI pin -->
-        <ellipse cx="534" cy="248" rx="20" ry="7" fill="url(#mg2)"/>
-        <circle cx="534" cy="248" r="8" fill="rgba(200,169,110,.16)" stroke="var(--accent)" stroke-width="1.6"/>
-        <circle cx="534" cy="248" r="3.5" fill="var(--accent)"/>
-        <text x="544" y="256" fill="rgba(200,169,110,.75)" font-size="10" font-family="sans-serif" font-weight="600">{{ __('front.map_saudi') }}</text>
-
-        <!-- UAE pin -->
-        <ellipse cx="568" cy="228" rx="18" ry="6" fill="url(#mg2)"/>
-        <circle cx="568" cy="228" r="7" fill="rgba(200,169,110,.16)" stroke="var(--accent)" stroke-width="1.5"/>
-        <circle cx="568" cy="228" r="3" fill="var(--accent)"/>
-        <text x="576" y="222" fill="rgba(200,169,110,.75)" font-size="10" font-family="sans-serif" font-weight="600">{{ __('front.map_uae') }}</text>
-
-        <!-- Animated connection lines -->
-        <path d="M510 210 C460 200 430 215 392 225" stroke="rgba(200,169,110,.35)" stroke-width="1.2" stroke-dasharray="5 4">
-          <animate attributeName="stroke-dashoffset" from="0" to="-100" dur="3s" repeatCount="indefinite"/>
-        </path>
-        <path d="M392 225 C310 215 245 205 155 185" stroke="rgba(200,169,110,.3)" stroke-width="1.2" stroke-dasharray="5 4">
-          <animate attributeName="stroke-dashoffset" from="0" to="-100" dur="4s" repeatCount="indefinite"/>
-        </path>
-        <path d="M510 210 C520 225 528 238 534 248" stroke="rgba(200,169,110,.25)" stroke-width="1" stroke-dasharray="4 3">
-          <animate attributeName="stroke-dashoffset" from="0" to="-50" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <path d="M510 210 C530 220 548 224 568 228" stroke="rgba(200,169,110,.25)" stroke-width="1" stroke-dasharray="4 3">
-          <animate attributeName="stroke-dashoffset" from="0" to="-50" dur="2.5s" repeatCount="indefinite"/>
-        </path>
-      </svg>
+      @include('front.partials.world-map')
     </div>
   </div>
 </section>

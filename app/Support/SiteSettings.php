@@ -101,7 +101,6 @@ class SiteSettings
                     'portfolio_title_1'  => self::f('text', 'Title — first line', 'العنوان — السطر الأول', 'Built for Attention.', 'صُنع لجذب الانتباه.'),
                     'portfolio_title_2'  => self::f('text', 'Title — second line (highlighted)', 'العنوان — السطر الثاني (مميز)', 'Backed by Results.', 'مدعوم بالنتائج.'),
                     'portfolio_btn_text' => self::f('text', 'Button — text', 'الزر — النص', 'View Full Portfolio →', 'شاهد كل الأعمال ←'),
-                    'portfolio_btn_url'  => self::n('url', 'Button — link', 'الزر — الرابط', '#contact'),
                 ],
             ],
 
@@ -109,8 +108,8 @@ class SiteSettings
                 'icon'  => 'bi-info-circle',
                 'title' => ['en' => 'About section', 'ar' => 'قسم من نحن'],
                 'fields' => [
-                    'about_video'       => self::n('video', 'Video', 'الفيديو', self::V_ABOUT, false),
-                    'about_poster'      => self::n('image', 'Video poster image', 'صورة الغلاف للفيديو', 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg?auto=compress&cs=tinysrgb&w=800', false),
+                    'about_video'       => self::n('video', 'Video (optional — plays over the image)', 'الفيديو (اختياري — يعمل فوق الصورة)', self::V_ABOUT, false),
+                    'about_poster'      => self::n('image', 'Image (shown on its own, or until the video loads)', 'الصورة (تظهر وحدها، أو إلى أن يتحمّل الفيديو)', 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg?auto=compress&cs=tinysrgb&w=800', false),
                     'about_badge_number' => self::n('text', 'Badge — number', 'الشارة — الرقم', '8+'),
                     'about_badge_line1' => self::f('text', 'Badge — line 1', 'الشارة — السطر 1', 'Years of', 'سنوات من'),
                     'about_badge_line2' => self::f('text', 'Badge — line 2', 'الشارة — السطر 2', 'Excellence', 'التميّز'),

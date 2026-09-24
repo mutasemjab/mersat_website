@@ -11,6 +11,8 @@ Route::group([
 
     // ── Public front routes ───────────────────────────────────────────────
     Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio.index');
+    Route::get('/portfolio/{id}', [HomeController::class, 'client'])->whereNumber('id')->name('portfolio.show');
     Route::post('/contact', [HomeController::class, 'contact'])->middleware('throttle:6,1')->name('contact.store');
 
 });

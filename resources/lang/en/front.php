@@ -41,11 +41,18 @@ return [
     'form_success'  => 'Thank you! Your message was sent — we will be in touch soon.',
     'form_error'    => 'Something went wrong. Please check the form and try again.',
 
-    // World map labels
-    'map_jordan'  => 'JORDAN',
-    'map_morocco' => 'MOROCCO',
-    'map_usa'     => 'USA',
-    'map_saudi'   => 'SAUDI',
-    'map_uae'     => 'UAE',
+    // Clients / portfolio pages
+    'view_more'       => 'View More Work',
+    'all_clients'     => 'Our Clients',
+    'all_clients_sub' => 'Every brand we have built with — pick one to see the work.',
+    'no_clients'      => 'No clients to show yet.',
+    'back_to_clients' => 'All clients',
+    'visit_website'   => 'Visit Website',
+    'client_work'     => 'The Work',
+    'no_work_yet'     => 'The work for this client will be published soon.',
+    'prev_client'     => 'Previous',
+    'next_client'     => 'Next',
+    'start_similar'   => 'Want something like this?',
+    'close'           => 'Close',
 
 ];

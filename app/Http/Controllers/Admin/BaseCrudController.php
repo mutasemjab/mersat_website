@@ -71,7 +71,8 @@ abstract class BaseCrudController extends Controller
     {
         $data = $this->payload($request, null);
 
-        $this->model::create($data);
+        $item = $this->model::create($data);
+        $this->afterSave($request, $item);
 
         return redirect()->route($this->route . '.index')->with('success', __('messages.saved'));
     }
@@ -88,6 +89,7 @@ abstract class BaseCrudController extends Controller
         $item = $this->model::findOrFail($id);
 
         $item->update($this->payload($request, $item));
+        $this->afterSave($request, $item);
 
         return redirect()->route($this->route . '.index')->with('success', __('messages.updated'));
     }
@@ -100,9 +102,26 @@ abstract class BaseCrudController extends Controller
             deleteImage($cfg['folder'], $item->getRawOriginal($field));
         }
 
+        $this->beforeDelete($item);
         $item->delete();
 
         return back()->with('success', __('messages.deleted'));
+    }
+
+    /** Rules of extra inputs a child controller saves itself in afterSave() (not stored on the model). */
+    protected function extraRules(): array
+    {
+        return [];
+    }
+
+    /** Called once the item is created / updated, e.g. to save related records. */
+    protected function afterSave(Request $request, Model $item): void
+    {
+    }
+
+    /** Called right before the item is deleted, e.g. to remove related files. */
+    protected function beforeDelete(Model $item): void
+    {
     }
 
     // ------------------------------------------------------------------
@@ -121,6 +140,7 @@ abstract class BaseCrudController extends Controller
     /** Validate the request and turn it into attributes ready for the model. */
     private function payload(Request $request, ?Model $item): array
     {
+        $request->validate($this->extraRules(), [], $this->attributeNames());
         $data = $request->validate($this->allRules($item), [], $this->attributeNames());
 
         foreach ($this->media as $field => $cfg) {
@@ -153,7 +173,7 @@ abstract class BaseCrudController extends Controller
         $rules = ['is_active' => 'nullable', 'sort_order' => 'nullable|integer|min:0|max:100000'] + $this->rules();
 
         foreach ($this->translatableRules as $field => $rule) {
-            $rules[$field] = 'required|array';
+            $rules[$field] = (str_contains($rule, 'nullable') ? 'nullable' : 'required') . '|array';
             $rules[$field . '.en'] = $rule;
             $rules[$field . '.ar'] = $rule;
         }
@@ -178,7 +198,7 @@ abstract class BaseCrudController extends Controller
     {
         $names = [];
 
-        foreach (array_keys($this->allRules(null)) as $key) {
+        foreach (array_keys($this->allRules(null) + $this->extraRules()) as $key) {
             $base = Str::before($key, '.');
             $label = Lang::has("messages.field.$base") ? __("messages.field.$base") : $base;
 

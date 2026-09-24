@@ -13,15 +13,43 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    /** Clients shown on the home page; the rest are on the portfolio page. */
+    private const HOME_CLIENTS = 7;
+
     public function index()
     {
         return view('front.home', [
             'tickerItems'    => TickerItem::active()->ordered()->get(),
             'services'       => Service::active()->ordered()->get(),
-            'portfolioItems' => PortfolioItem::active()->ordered()->get(),
+            'portfolioItems' => PortfolioItem::active()->ordered()->take(self::HOME_CLIENTS)->get(),
             'stats'          => Stat::active()->ordered()->get(),
             'locations'      => Location::active()->ordered()->get(),
             'socialLinks'    => SocialLink::active()->ordered()->get(),
+        ]);
+    }
+
+    /** All clients. */
+    public function portfolio()
+    {
+        return view('front.portfolio', [
+            'portfolioItems' => PortfolioItem::active()->ordered()->get(),
+            'socialLinks'    => SocialLink::active()->ordered()->get(),
+        ]);
+    }
+
+    /** One client: description, website link and the work we did for them. */
+    public function client(int $id)
+    {
+        $client = PortfolioItem::active()->with('media')->findOrFail($id);
+
+        $ids = PortfolioItem::active()->ordered()->pluck('id');
+        $pos = $ids->search($client->id);
+
+        return view('front.client', [
+            'client'      => $client,
+            'prev'        => $pos > 0 ? PortfolioItem::find($ids[$pos - 1]) : null,
+            'next'        => $pos < $ids->count() - 1 ? PortfolioItem::find($ids[$pos + 1]) : null,
+            'socialLinks' => SocialLink::active()->ordered()->get(),
         ]);
     }
 

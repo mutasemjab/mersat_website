@@ -11,7 +11,7 @@ class Location extends Model
 
     public array $translatable = ['city', 'description'];
 
-    protected $fillable = ['city', 'description', 'sort_order', 'is_active'];
+    protected $fillable = ['city', 'description', 'country_code', 'sort_order', 'is_active'];
 
     protected $casts = ['is_active' => 'boolean'];
 
