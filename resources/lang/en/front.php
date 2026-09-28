@@ -55,4 +55,20 @@ return [
     'start_similar'   => 'Want something like this?',
     'close'           => 'Close',
 
+    // Navigation / slider / gallery
+    'skip_to_content' => 'Skip to content',
+    'menu'            => 'Menu',
+    'slide_n'         => 'Slide :n',
+    'prev_slide'      => 'Previous slide',
+    'next_slide'      => 'Next slide',
+    'work_label'      => 'Our Work',
+    'work_title'      => 'Photos & Films',
+    'work_title_hl'   => 'We Produced.',
+    'filter_all'      => 'All',
+    'filter_photos'   => 'Photos',
+    'filter_videos'   => 'Videos',
+    'quick_links'     => 'Explore',
+    'fact_field'      => 'Field',
+    'clients_count'   => '{1} :n client|[2,*] :n clients',
+
 ];

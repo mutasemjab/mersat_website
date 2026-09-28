@@ -19,6 +19,7 @@ class PermissionSeeder extends Seeder
             'setting-edit',
 
             // ── Website content lists ──────────────────────────────────────────
+            'slide-table',     'slide-add',     'slide-edit',     'slide-delete',
             'ticker-table',    'ticker-add',    'ticker-edit',    'ticker-delete',
             'service-table',   'service-add',   'service-edit',   'service-delete',
             'portfolio-table', 'portfolio-add', 'portfolio-edit', 'portfolio-delete',

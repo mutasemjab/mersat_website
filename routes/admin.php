@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\PortfolioItemController;
@@ -48,6 +49,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('content/{group}', [SettingController::class, 'update'])->name('admin.setting.update');
 
         // Repeatable content: each one is a bilingual list with add / edit / delete
+        Route::resource('slide',     HeroSlideController::class,     ['as' => 'admin'])->except(['show']);
         Route::resource('ticker',    TickerItemController::class,    ['as' => 'admin'])->except(['show']);
         Route::resource('service',   ServiceController::class,       ['as' => 'admin'])->except(['show']);
         Route::resource('portfolio', PortfolioItemController::class, ['as' => 'admin'])->except(['show']);

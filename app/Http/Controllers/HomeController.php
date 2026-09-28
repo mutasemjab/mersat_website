@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
+use App\Models\HeroSlide;
 use App\Models\Location;
 use App\Models\PortfolioItem;
+use App\Models\PortfolioMedia;
 use App\Models\Service;
 use App\Models\SocialLink;
 use App\Models\Stat;
@@ -16,9 +18,14 @@ class HomeController extends Controller
     /** Clients shown on the home page; the rest are on the portfolio page. */
     private const HOME_CLIENTS = 7;
 
+    /** Latest images / videos (from the clients' galleries) shown in the home page work gallery. */
+    private const HOME_WORK = 12;
+
     public function index()
     {
         return view('front.home', [
+            'slides'         => $this->slides(),
+            'workMedia'      => PortfolioMedia::with('item')->whereHas('item', fn ($q) => $q->active())->latest('id')->take(self::HOME_WORK)->get(),
             'tickerItems'    => TickerItem::active()->ordered()->get(),
             'services'       => Service::active()->ordered()->get(),
             'portfolioItems' => PortfolioItem::active()->ordered()->take(self::HOME_CLIENTS)->get(),
@@ -26,6 +33,29 @@ class HomeController extends Controller
             'locations'      => Location::active()->ordered()->get(),
             'socialLinks'    => SocialLink::active()->ordered()->get(),
         ]);
+    }
+
+    /** Banner slides; texts left empty fall back to the hero texts of the settings. */
+    private function slides(): array
+    {
+        $default = [
+            'kicker'    => setting('hero_kicker'),
+            'title'     => setting('hero_title_1'),
+            'highlight' => trim(setting('hero_title_thin') . ' ' . setting('hero_title_glow')),
+            'subtitle'  => setting('hero_subtitle'),
+        ];
+
+        $slides = HeroSlide::active()->ordered()->get()->map(fn (HeroSlide $s) => [
+            'image'     => $s->image_url,
+            'video'     => $s->video_url,
+            'kicker'    => $s->kicker ?: $default['kicker'],
+            'title'     => $s->title ?: $default['title'],
+            'highlight' => $s->highlight ?: ($s->title ? '' : $default['highlight']),
+            'subtitle'  => $s->subtitle ?: $default['subtitle'],
+        ])->all();
+
+        // No slides yet: a single slide from the hero image / video of the settings
+        return $slides ?: [$default + ['image' => setting_media('hero_poster'), 'video' => setting_media('hero_video')]];
     }
 
     /** All clients. */

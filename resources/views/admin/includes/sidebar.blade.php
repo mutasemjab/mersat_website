@@ -8,7 +8,7 @@
     // [icon, settings group|null, [[route, permission, label key], ...]]
     $sections = [
         ['general',   'bi-globe2',           null],
-        ['hero',      'bi-film',             null],
+        ['hero',      'bi-film',             [['admin.slide.index', 'slide-table', 'hero_slides']]],
         [null,        'bi-chat-square-text', [['admin.ticker.index', 'ticker-table', 'ticker_items']], 'ticker'],
         ['services',  'bi-grid-3x3-gap',     [['admin.service.index', 'service-table', 'services']]],
         ['portfolio', 'bi-collection-play',  [['admin.portfolio.index', 'portfolio-table', 'portfolio_items']]],

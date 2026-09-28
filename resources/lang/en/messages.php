@@ -169,6 +169,16 @@ return [
         'x'         => 'X (Twitter)',
     ],
 
+    'hero_slides'     => 'Banner slides',
+    'hero_slide'      => 'slide',
+    'slide_hint'      => 'The banner rotates through the visible slides in order. Use wide, high-quality landscape images (at least 1920 px wide). Leave a text empty to use the main hero text from "Website content → Hero".',
+    'slide_image'     => 'Background image',
+    'slide_video'     => 'Background video (optional — plays instead of the image)',
+    'slide_kicker'    => 'Small line above the title',
+    'slide_title'     => 'Title',
+    'slide_highlight' => 'Highlighted part of the title (shown on a second line)',
+    'slide_subtitle'  => 'Short text under the title',
+
     'service_custom_icon' => 'Custom icon image (optional — replaces the built-in icon)',
     'portfolio_hover_video' => 'Hover video (optional — plays when the visitor hovers the card)',
     'portfolio_url_hint'  => 'Optional. Shown as a "Visit website" button on the client page.',
@@ -231,6 +241,7 @@ return [
     'perm_group' => [
         'roles_employees' => 'Roles & employees',
         'website_texts'   => 'Website texts & media',
+        'hero_slides'     => 'Banner slides',
         'ticker'          => 'Ticker',
         'services'        => 'Services',
         'portfolio'       => 'Portfolio',

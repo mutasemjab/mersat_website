@@ -25,6 +25,20 @@ class PortfolioMedia extends Model
         return media_url($this->path, self::FOLDER);
     }
 
+    /** Still image for grids: the image itself, or the YouTube cover. Null for other videos. */
+    public function getThumbUrlAttribute(): ?string
+    {
+        if ($this->type === 'image') {
+            return $this->url;
+        }
+
+        if (preg_match('#youtube\.com/embed/([\w-]{11})#', (string) $this->embed_url, $m)) {
+            return 'https://i.ytimg.com/vi/' . $m[1] . '/hqdefault.jpg';
+        }
+
+        return null;
+    }
+
     /** Embeddable player URL for YouTube / Vimeo links, null for a direct image / video file. */
     public function getEmbedUrlAttribute(): ?string
     {

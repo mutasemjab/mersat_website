@@ -55,4 +55,20 @@ return [
     'start_similar'   => 'تريد شيئاً مشابهاً؟',
     'close'           => 'إغلاق',
 
+    // التنقل / البانر / المعرض
+    'skip_to_content' => 'تخطَّ إلى المحتوى',
+    'menu'            => 'القائمة',
+    'slide_n'         => 'الشريحة :n',
+    'prev_slide'      => 'الشريحة السابقة',
+    'next_slide'      => 'الشريحة التالية',
+    'work_label'      => 'أعمالنا',
+    'work_title'      => 'صور وأفلام',
+    'work_title_hl'   => 'من إنتاجنا.',
+    'filter_all'      => 'الكل',
+    'filter_photos'   => 'صور',
+    'filter_videos'   => 'فيديو',
+    'quick_links'     => 'استكشف',
+    'fact_field'      => 'المجال',
+    'clients_count'   => '{1} عميل واحد|{2} عميلان|[3,10] :n عملاء|[11,*] :n عميلاً',
+
 ];

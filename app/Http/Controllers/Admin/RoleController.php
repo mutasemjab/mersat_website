@@ -23,6 +23,7 @@ class RoleController extends Controller
         return [
             'roles_employees' => ['role-table', 'role-add', 'role-edit', 'role-delete', 'employee-table', 'employee-add', 'employee-edit', 'employee-delete'],
             'website_texts'   => ['setting-edit'],
+            'hero_slides'     => ['slide-table', 'slide-add', 'slide-edit', 'slide-delete'],
             'ticker'          => ['ticker-table', 'ticker-add', 'ticker-edit', 'ticker-delete'],
             'services'        => ['service-table', 'service-add', 'service-edit', 'service-delete'],
             'portfolio'       => ['portfolio-table', 'portfolio-add', 'portfolio-edit', 'portfolio-delete'],
