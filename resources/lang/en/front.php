@@ -10,6 +10,7 @@ return [
     // Navigation
     'nav_services'  => 'Services',
     'nav_portfolio' => 'Portfolio',
+    'nav_clients'   => 'Clients',
     'nav_about'     => 'About',
     'nav_global'    => 'Worldwide',
     'nav_contact'   => 'Contact',

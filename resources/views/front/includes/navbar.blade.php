@@ -6,6 +6,12 @@
     $navLinks = [
         'services'  => __('front.nav_services'),
         'portfolio' => __('front.nav_portfolio'),
+    ];
+    // "Our clients" jumps to the logo wall, which only exists once a logo has been added
+    if (\App\Models\ClientLogo::active()->exists()) {
+        $navLinks['clients'] = __('front.nav_clients');
+    }
+    $navLinks += [
         'about'     => __('front.nav_about'),
         'global'    => __('front.nav_global'),
         'contact'   => __('front.nav_contact'),

@@ -10,6 +10,7 @@ return [
     // Navigation
     'nav_services'  => 'الخدمات',
     'nav_portfolio' => 'أعمالنا',
+    'nav_clients'   => 'عملاؤنا',
     'nav_about'     => 'من نحن',
     'nav_global'    => 'حضورنا',
     'nav_contact'   => 'تواصل معنا',
