@@ -1,57 +1,57 @@
-@php $dir = app()->getLocale() === 'ar' ? 'rtl' : 'ltr'; @endphp
+<?php $dir = app()->getLocale() === 'ar' ? 'rtl' : 'ltr'; ?>
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="{{ $dir }}">
+<html lang="<?php echo e(app()->getLocale()); ?>" dir="<?php echo e($dir); ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', __('messages.dashboard')) — {{ __('messages.brand') }}</title>
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <title><?php echo $__env->yieldContent('title', __('messages.dashboard')); ?> — <?php echo e(__('messages.brand')); ?></title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    {{-- Bootstrap 5 (LTR / RTL) --}}
-    @if($dir === 'rtl')
+    
+    <?php if($dir === 'rtl'): ?>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
-    @else
+    <?php else: ?>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    @endif
+    <?php endif; ?>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/style.css') }}?v={{ filemtime(base_path('assets/admin/css/style.css')) }}" rel="stylesheet">
+    <link href="<?php echo e(asset('assets/admin/css/style.css')); ?>?v=<?php echo e(filemtime(base_path('assets/admin/css/style.css'))); ?>" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet">
-    @stack('styles')
+    <?php echo $__env->yieldPushContent('styles'); ?>
 </head>
 <body>
 
-    {{-- Overlay for mobile sidebar --}}
+    
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    {{-- Sidebar --}}
-    @include('admin.includes.sidebar')
+    
+    <?php echo $__env->make('admin.includes.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-    {{-- Main wrapper --}}
+    
     <div class="main-wrapper" id="mainWrapper">
 
-        {{-- Navbar --}}
-        @include('admin.includes.navbar')
+        
+        <?php echo $__env->make('admin.includes.navbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-        {{-- Page content --}}
+        
         <main class="main-content">
-            @include('admin.includes.flash')
-            @yield('content')
+            <?php echo $__env->make('admin.includes.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <?php echo $__env->yieldContent('content'); ?>
         </main>
 
-        {{-- Footer --}}
-        @include('admin.includes.footer')
+        
+        <?php echo $__env->make('admin.includes.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-    </div>{{-- /main-wrapper --}}
+    </div>
 
-    {{-- Bootstrap JS (must be before panel.js) --}}
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('assets/shared/js/panel.js') }}"></script>
+    <script src="<?php echo e(asset('assets/shared/js/panel.js')); ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
@@ -66,6 +66,7 @@
         });
     });
     </script>
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 </html>
+<?php /**PATH C:\xampp\htdocs\mersat\resources\views/admin/layouts/app.blade.php ENDPATH**/ ?>
