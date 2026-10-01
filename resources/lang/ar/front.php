@@ -70,5 +70,8 @@ return [
     'quick_links'     => 'استكشف',
     'fact_field'      => 'المجال',
     'clients_count'   => '{1} عميل واحد|{2} عميلان|[3,10] :n عملاء|[11,*] :n عميلاً',
+    'logos_label'     => 'عملاؤنا',
+    'logos_title'     => 'علامات تجارية',
+    'logos_title_hl'  => 'تثق بنا.',
 
 ];

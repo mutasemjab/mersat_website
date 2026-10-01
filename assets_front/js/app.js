@@ -66,7 +66,7 @@
     const texts = $$('.hero-text', hero);
     const dots = $$('.hero-dot', hero);
     const cur = $('.hc-cur', hero);
-    const interval = 6500;
+    const interval = Number(hero.dataset.interval) || 5000;
     let index = 0;
     let timer = null;
     let paused = false;

@@ -23,6 +23,7 @@ class PermissionSeeder extends Seeder
             'ticker-table',    'ticker-add',    'ticker-edit',    'ticker-delete',
             'service-table',   'service-add',   'service-edit',   'service-delete',
             'portfolio-table', 'portfolio-add', 'portfolio-edit', 'portfolio-delete',
+            'logo-table',      'logo-add',      'logo-edit',      'logo-delete',
             'stat-table',      'stat-add',      'stat-edit',      'stat-delete',
             'location-table',  'location-add',  'location-edit',  'location-delete',
             'social-table',    'social-add',    'social-edit',    'social-delete',

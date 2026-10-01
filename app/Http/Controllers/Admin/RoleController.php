@@ -27,6 +27,7 @@ class RoleController extends Controller
             'ticker'          => ['ticker-table', 'ticker-add', 'ticker-edit', 'ticker-delete'],
             'services'        => ['service-table', 'service-add', 'service-edit', 'service-delete'],
             'portfolio'       => ['portfolio-table', 'portfolio-add', 'portfolio-edit', 'portfolio-delete'],
+            'client_logos'    => ['logo-table', 'logo-add', 'logo-edit', 'logo-delete'],
             'stats'           => ['stat-table', 'stat-add', 'stat-edit', 'stat-delete'],
             'locations'       => ['location-table', 'location-add', 'location-edit', 'location-delete'],
             'social_links'    => ['social-table', 'social-add', 'social-edit', 'social-delete'],

@@ -512,7 +512,7 @@ body.menu-open {
 
 /* ═══ HERO SLIDER ═══ */
 .hero {
-    --interval: 6500ms;
+    --interval: 5000ms;
     position: relative;
     height: 100vh;
     height: 100svh;
@@ -1540,16 +1540,28 @@ body.menu-open {
     align-items: center;
 }
 
+/* Heading + text + map in the wide column, the countries list in the narrow one beside it */
+.global-main {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.global-copy {
+    margin-bottom: clamp(24px, 3vw, 36px);
+}
+
 .global-copy > p {
     margin-top: 18px;
+    max-width: 640px;
     color: rgba(255, 255, 255, .75);
 }
 
 .locations {
+    grid-column: 1;
+    grid-row: 1;
     list-style: none;
     display: grid;
     gap: 10px;
-    margin-top: 32px;
 }
 
 .g-loc {
@@ -2410,6 +2422,13 @@ video.failed {
         grid-template-columns: 1fr;
     }
 
+    /* One column: heading, map, then the countries */
+    .global-main,
+    .locations {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
     .locations {
         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     }
@@ -2697,5 +2716,141 @@ video.failed {
         animation-iteration-count: 1 !important;
         transition-duration: .01ms !important;
         scroll-behavior: auto !important;
+    }
+}
+
+/* ═══ CLIENT LOGOS ═══ */
+.logos-section {
+    background: var(--white);
+    overflow: hidden;
+}
+
+.sec-head-center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sec-head-center .eyebrow::after {
+    content: '';
+    width: 28px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+}
+
+/* Scrolling rows; the track holds the logos twice and slides by half its width for a seamless loop */
+.logo-marquee {
+    display: grid;
+    gap: 18px;
+    direction: ltr;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+
+.logo-row {
+    overflow: hidden;
+}
+
+.logo-track {
+    display: flex;
+    gap: 18px;
+    width: max-content;
+    animation: logoScroll var(--dur, 40s) linear infinite;
+}
+
+.logo-row-rev .logo-track {
+    animation-direction: reverse;
+}
+
+.logo-marquee:hover .logo-track {
+    animation-play-state: paused;
+}
+
+@keyframes logoScroll {
+    to { transform: translateX(calc(-50% - 9px)); }
+}
+
+.logo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+}
+
+.logo-card {
+    flex-shrink: 0;
+    width: 220px;
+    height: 120px;
+    padding: 24px 30px;
+    border-radius: var(--radius);
+    background: var(--white);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color .35s, box-shadow .35s, transform .35s var(--ease);
+}
+
+.logo-card img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: filter .35s, opacity .35s;
+}
+
+/* Logos look uniform in grey and get their own colours when pointed at */
+@media (hover: hover) {
+    .logo-card img {
+        filter: grayscale(1);
+        opacity: .65;
+    }
+
+    .logo-card:hover img {
+        filter: none;
+        opacity: 1;
+    }
+}
+
+.logo-card:hover {
+    border-color: var(--p-200);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-4px);
+}
+
+@media (max-width: 640px) {
+    .logo-marquee,
+    .logo-track,
+    .logo-grid {
+        gap: 12px;
+    }
+
+    @keyframes logoScroll {
+        to { transform: translateX(calc(-50% - 6px)); }
+    }
+
+    .logo-card {
+        width: 150px;
+        height: 86px;
+        padding: 16px 20px;
+        border-radius: var(--radius-sm);
+    }
+
+    .logo-grid .logo-card {
+        width: calc(50% - 6px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .logo-track {
+        animation: none;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: auto;
+    }
+
+    .logo-track [aria-hidden="true"] {
+        display: none;
     }
 }

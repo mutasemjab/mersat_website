@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClientLogo;
 use App\Models\ContactMessage;
 use App\Models\HeroSlide;
 use App\Models\Location;
@@ -26,6 +27,7 @@ class HomeController extends Controller
         return view('front.home', [
             'slides'         => $this->slides(),
             'workMedia'      => PortfolioMedia::with('item')->whereHas('item', fn ($q) => $q->active())->latest('id')->take(self::HOME_WORK)->get(),
+            'clientLogos'    => ClientLogo::active()->ordered()->get(),
             'tickerItems'    => TickerItem::active()->ordered()->get(),
             'services'       => Service::active()->ordered()->get(),
             'portfolioItems' => PortfolioItem::active()->ordered()->take(self::HOME_CLIENTS)->get(),

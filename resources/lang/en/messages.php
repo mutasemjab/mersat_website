@@ -124,6 +124,7 @@ return [
     // Table / form field labels
     'field' => [
         'title'         => 'Title',
+        'logo'          => 'Logo',
         'description'   => 'Description',
         'icon'          => 'Icon',
         'image'         => 'Image',
@@ -171,6 +172,11 @@ return [
 
     'hero_slides'     => 'Banner slides',
     'hero_slide'      => 'slide',
+    'client_logos'    => 'Client logos',
+    'client_logo'     => 'client logo',
+    'logo_hint'       => 'Logos appear in the "Brands that trust us" section of the home page. For the best look use a PNG with a transparent background, cropped tight around the logo, at least 300 px wide.',
+    'logo_name'       => 'Client name (optional)',
+    'logo_name_hint'  => 'Not shown on the website; used for search engines and screen readers.',
     'slide_hint'      => 'The banner rotates through the visible slides in order. Use wide, high-quality landscape images (at least 1920 px wide). Leave a text empty to use the main hero text from "Website content → Hero".',
     'slide_image'     => 'Background image',
     'slide_video'     => 'Background video (optional — plays instead of the image)',
@@ -242,6 +248,7 @@ return [
         'roles_employees' => 'Roles & employees',
         'website_texts'   => 'Website texts & media',
         'hero_slides'     => 'Banner slides',
+        'client_logos'    => 'Client logos',
         'ticker'          => 'Ticker',
         'services'        => 'Services',
         'portfolio'       => 'Portfolio',

@@ -12,6 +12,7 @@
         [null,        'bi-chat-square-text', [['admin.ticker.index', 'ticker-table', 'ticker_items']], 'ticker'],
         ['services',  'bi-grid-3x3-gap',     [['admin.service.index', 'service-table', 'services']]],
         ['portfolio', 'bi-collection-play',  [['admin.portfolio.index', 'portfolio-table', 'portfolio_items']]],
+        [null,        'bi-award',            [['admin.logo.index', 'logo-table', 'client_logos']], 'logos'],
         ['about',     'bi-info-circle',      [['admin.stat.index', 'stat-table', 'stats']]],
         ['global',    'bi-geo-alt',          [['admin.location.index', 'location-table', 'locations']]],
         ['contact',   'bi-telephone',        [['admin.social.index', 'social-table', 'social_links']]],

@@ -70,5 +70,8 @@ return [
     'quick_links'     => 'Explore',
     'fact_field'      => 'Field',
     'clients_count'   => '{1} :n client|[2,*] :n clients',
+    'logos_label'     => 'Our Clients',
+    'logos_title'     => 'Brands that',
+    'logos_title_hl'  => 'trust us.',
 
 ];

@@ -590,3 +590,6 @@ html[dir="rtl"] .page-title i { margin-right: 0 !important; margin-left: .25rem;
 .gallery-admin-embed { width: 100%; height: 90px; object-fit: cover; border-radius: 6px; background: #0f172a; }
 .gallery-admin-embed { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .2rem; color: #fff; font-size: 1.4rem; overflow: hidden; padding: .3rem; }
 .gallery-admin-embed small { font-size: 10px; opacity: .7; word-break: break-all; text-align: center; }
+
+/* Client logos list */
+.thumb-logo { width: 96px; height: 48px; object-fit: contain; padding: 6px; background: #fff; border: 1px solid var(--border); border-radius: 8px; }

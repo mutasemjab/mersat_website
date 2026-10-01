@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ClientLogoController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmployeeController;
@@ -53,6 +54,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('ticker',    TickerItemController::class,    ['as' => 'admin'])->except(['show']);
         Route::resource('service',   ServiceController::class,       ['as' => 'admin'])->except(['show']);
         Route::resource('portfolio', PortfolioItemController::class, ['as' => 'admin'])->except(['show']);
+        Route::resource('logo',      ClientLogoController::class,    ['as' => 'admin'])->except(['show']);
         Route::resource('stat',      StatController::class,          ['as' => 'admin'])->except(['show']);
         Route::resource('location',  LocationController::class,      ['as' => 'admin'])->except(['show']);
         Route::resource('social',    SocialLinkController::class,    ['as' => 'admin'])->except(['show']);

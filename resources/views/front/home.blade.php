@@ -4,7 +4,7 @@
 @section('content')
 
 {{-- ═══ HERO SLIDER ═══ --}}
-<section id="hero" class="hero" aria-roledescription="carousel" aria-label="{{ setting('site_name') }}">
+<section id="hero" class="hero" data-interval="5000" style="--interval:5000ms" aria-roledescription="carousel" aria-label="{{ setting('site_name') }}">
   <div class="hero-slides">
     @foreach ($slides as $slide)
     <div class="hero-slide {{ $loop->first ? 'is-active' : '' }}" aria-hidden="{{ $loop->first ? 'false' : 'true' }}">
@@ -109,6 +109,54 @@
   </div>
 </section>
 
+{{-- ═══ CLIENT LOGOS ═══ --}}
+@if($clientLogos->isNotEmpty())
+@php
+    // Enough logos: scrolling rows (two rows from 10 logos). Few logos: a still, centred grid.
+    $marquee = $clientLogos->count() >= 6;
+    $rows = $marquee && $clientLogos->count() >= 10
+        ? [$clientLogos->nth(2), $clientLogos->nth(2, 1)]
+        : [$clientLogos];
+@endphp
+<section id="clients" class="section logos-section">
+  <div class="container">
+    <div class="sec-head sec-head-center">
+      <p class="eyebrow r">{{ __('front.logos_label') }}</p>
+      <h2 class="sec-title r">{{ __('front.logos_title') }} <em>{{ __('front.logos_title_hl') }}</em></h2>
+    </div>
+  </div>
+
+  @if($marquee)
+  <div class="logo-marquee r">
+    @foreach($rows as $row)
+    @php $reps = max(1, (int) ceil(8 / $row->count())); @endphp
+    <div class="logo-row {{ $loop->odd ? '' : 'logo-row-rev' }}" style="--dur:{{ max(25, $row->count() * $reps * 4) }}s">
+      <div class="logo-track">
+        @for($copy = 0; $copy < 2; $copy++)
+          @for($rep = 0; $rep < $reps; $rep++)
+            @foreach($row as $logo)
+            <div class="logo-card" @if($copy || $rep) aria-hidden="true" @endif>
+              <img src="{{ $logo->logo_url }}" alt="{{ ($copy || $rep) ? '' : $logo->name }}" loading="lazy">
+            </div>
+            @endforeach
+          @endfor
+        @endfor
+      </div>
+    </div>
+    @endforeach
+  </div>
+  @else
+  <div class="container">
+    <div class="logo-grid">
+      @foreach($clientLogos as $logo)
+      <div class="logo-card r" style="--d:{{ $loop->index * 70 }}ms"><img src="{{ $logo->logo_url }}" alt="{{ $logo->name }}" loading="lazy"></div>
+      @endforeach
+    </div>
+  </div>
+  @endif
+</section>
+@endif
+
 {{-- ═══ CLIENTS ═══ --}}
 <section id="portfolio" class="section section-tint">
   <div class="container">
@@ -198,23 +246,26 @@
 
 {{-- ═══ WORLDWIDE ═══ --}}
 <section id="global" class="section section-dark">
+  {{-- Heading, text and map share the wide column; the countries list sits beside them --}}
   <div class="container global-grid">
-    <div class="global-copy">
-      <p class="eyebrow r">{{ setting('global_label') }}</p>
-      <h2 class="sec-title r">{{ setting('global_title_1') }} <em>{{ setting('global_title_2') }}</em></h2>
-      <p class="r">{{ setting('global_text') }}</p>
-      <ul class="locations r">
-        @foreach($locations as $loc)
-        <li class="g-loc" data-cc="{{ $loc->country_code }}">
-          <span class="g-dot"></span>
-          <span><b>{{ $loc->city }}</b><small>{{ $loc->description }}</small></span>
-        </li>
-        @endforeach
-      </ul>
+    <div class="global-main">
+      <div class="global-copy">
+        <p class="eyebrow r">{{ setting('global_label') }}</p>
+        <h2 class="sec-title r">{{ setting('global_title_1') }} <em>{{ setting('global_title_2') }}</em></h2>
+        <p class="r">{{ setting('global_text') }}</p>
+      </div>
+      <div class="world-map-wrap r">
+        @include('front.partials.world-map')
+      </div>
     </div>
-    <div class="world-map-wrap r">
-      @include('front.partials.world-map')
-    </div>
+    <ul class="locations r">
+      @foreach($locations as $loc)
+      <li class="g-loc" data-cc="{{ $loc->country_code }}">
+        <span class="g-dot"></span>
+        <span><b>{{ $loc->city }}</b><small>{{ $loc->description }}</small></span>
+      </li>
+      @endforeach
+    </ul>
   </div>
 </section>
 
