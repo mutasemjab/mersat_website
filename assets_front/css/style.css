@@ -2740,17 +2740,17 @@ video.failed {
     background: currentColor;
 }
 
-/* Scrolling rows; the track holds the logos twice and slides by half its width for a seamless loop */
+/* One row of logos. The track holds the list twice and slides by half its width, so the loop never shows a gap.
+   When every logo fits on screen, app.js adds .is-static: no movement, logos centred. */
 .logo-marquee {
-    display: grid;
-    gap: 18px;
     direction: ltr;
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }
 
 .logo-row {
     overflow: hidden;
+    padding-block: 30px;   /* room for the hover zoom and its shadow */
 }
 
 .logo-track {
@@ -2758,10 +2758,6 @@ video.failed {
     gap: 18px;
     width: max-content;
     animation: logoScroll var(--dur, 40s) linear infinite;
-}
-
-.logo-row-rev .logo-track {
-    animation-direction: reverse;
 }
 
 .logo-marquee:hover .logo-track {
@@ -2772,57 +2768,56 @@ video.failed {
     to { transform: translateX(calc(-50% - 9px)); }
 }
 
-.logo-grid {
-    display: flex;
-    flex-wrap: wrap;
+.logo-marquee.is-static {
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+.logo-marquee.is-static .logo-row {
+    overflow: visible;
+}
+
+.logo-marquee.is-static .logo-track {
+    animation: none;
+    width: auto;
     justify-content: center;
-    gap: 18px;
+}
+
+.logo-marquee.is-static [data-copy] {
+    display: none;
 }
 
 .logo-card {
     flex-shrink: 0;
     width: 220px;
     height: 120px;
-    padding: 24px 30px;
+    padding: 22px 28px;
     border-radius: var(--radius);
     background: var(--white);
     border: 1px solid var(--line);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: border-color .35s, box-shadow .35s, transform .35s var(--ease);
+    transition: transform .35s var(--ease), box-shadow .35s, border-color .35s;
 }
 
+/* Logos keep their own colours */
 .logo-card img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    transition: filter .35s, opacity .35s;
-}
-
-/* Logos look uniform in grey and get their own colours when pointed at */
-@media (hover: hover) {
-    .logo-card img {
-        filter: grayscale(1);
-        opacity: .65;
-    }
-
-    .logo-card:hover img {
-        filter: none;
-        opacity: 1;
-    }
 }
 
 .logo-card:hover {
+    transform: scale(1.1);
     border-color: var(--p-200);
-    box-shadow: var(--shadow-sm);
-    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 1;
 }
 
 @media (max-width: 640px) {
-    .logo-marquee,
-    .logo-track,
-    .logo-grid {
+    .logo-track {
         gap: 12px;
     }
 
@@ -2830,27 +2825,28 @@ video.failed {
         to { transform: translateX(calc(-50% - 6px)); }
     }
 
+    .logo-row {
+        padding-block: 12px;
+    }
+
     .logo-card {
         width: 150px;
         height: 86px;
-        padding: 16px 20px;
+        padding: 14px 18px;
         border-radius: var(--radius-sm);
-    }
-
-    .logo-grid .logo-card {
-        width: calc(50% - 6px);
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .logo-track {
         animation: none;
-        flex-wrap: wrap;
-        justify-content: center;
-        width: auto;
     }
 
-    .logo-track [aria-hidden="true"] {
+    .logo-row {
+        overflow-x: auto;
+    }
+
+    .logo-marquee [data-copy] {
         display: none;
     }
 }

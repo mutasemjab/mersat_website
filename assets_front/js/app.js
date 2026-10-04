@@ -193,6 +193,19 @@
     }));
   });
 
+  /* ───────── CLIENT LOGOS: one row; still and centred when every logo fits, scrolling otherwise ───────── */
+  $$('.logo-marquee').forEach(mq => {
+    const row = $('.logo-row', mq);
+    const cards = $$('.logo-card:not([data-copy])', mq);
+    const fit = () => {
+      const gap = parseFloat(getComputedStyle($('.logo-track', mq)).columnGap) || 0;
+      const needed = cards.reduce((w, c) => w + c.offsetWidth, 0) + gap * (cards.length - 1);
+      mq.classList.toggle('is-static', needed <= row.clientWidth - 64);
+    };
+    fit();
+    addEventListener('resize', fit, { passive: true });
+  });
+
   /* ───────── WORLD MAP: hovering a location lights its country ───────── */
   const wmap = $('.world-map-svg');
   if (wmap) {

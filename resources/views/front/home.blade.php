@@ -112,11 +112,9 @@
 {{-- ═══ CLIENT LOGOS ═══ --}}
 @if($clientLogos->isNotEmpty())
 @php
-    // Enough logos: scrolling rows (two rows from 10 logos). Few logos: a still, centred grid.
-    $marquee = $clientLogos->count() >= 6;
-    $rows = $marquee && $clientLogos->count() >= 10
-        ? [$clientLogos->nth(2), $clientLogos->nth(2, 1)]
-        : [$clientLogos];
+    // Always a single row: it scrolls endlessly (the list is repeated so the loop has no gap);
+    // app.js stops it and centres the logos when they all fit on screen.
+    $reps = max(1, (int) ceil(8 / $clientLogos->count()));
 @endphp
 <section id="clients" class="section logos-section">
   <div class="container">
@@ -126,34 +124,21 @@
     </div>
   </div>
 
-  @if($marquee)
-  <div class="logo-marquee r">
-    @foreach($rows as $row)
-    @php $reps = max(1, (int) ceil(8 / $row->count())); @endphp
-    <div class="logo-row {{ $loop->odd ? '' : 'logo-row-rev' }}" style="--dur:{{ max(25, $row->count() * $reps * 4) }}s">
+  <div class="logo-marquee r" data-logos="{{ $clientLogos->count() }}">
+    <div class="logo-row" style="--dur:{{ max(25, $clientLogos->count() * $reps * 4) }}s">
       <div class="logo-track">
         @for($copy = 0; $copy < 2; $copy++)
           @for($rep = 0; $rep < $reps; $rep++)
-            @foreach($row as $logo)
-            <div class="logo-card" @if($copy || $rep) aria-hidden="true" @endif>
-              <img src="{{ $logo->logo_url }}" alt="{{ ($copy || $rep) ? '' : $logo->name }}" loading="lazy">
+            @foreach($clientLogos as $logo)
+            <div class="logo-card" @if($copy || $rep) aria-hidden="true" data-copy @endif>
+              <img src="{{ $logo->logo_url }}" alt="{{ ($copy || $rep) ? '' : $logo->name }}">
             </div>
             @endforeach
           @endfor
         @endfor
       </div>
     </div>
-    @endforeach
   </div>
-  @else
-  <div class="container">
-    <div class="logo-grid">
-      @foreach($clientLogos as $logo)
-      <div class="logo-card r" style="--d:{{ $loop->index * 70 }}ms"><img src="{{ $logo->logo_url }}" alt="{{ $logo->name }}" loading="lazy"></div>
-      @endforeach
-    </div>
-  </div>
-  @endif
 </section>
 @endif
 
