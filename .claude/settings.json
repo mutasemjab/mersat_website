@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"c:\\\\xampp\\\\htdocs\\\\mersat\\\\app\\\\Models\")",
+      "Bash(php artisan *)",
+      "PowerShell(& \"C:\\\\xampp\\\\mysql\\\\bin\\\\mysqld.exe\" --install 2>&1)",
+      "PowerShell(Start-Service MySQL 2>&1)",
+      "PowerShell(Get-Service | Where-Object { $_.DisplayName -match \"mysql|xampp|maria\" } | Select-Object Name, DisplayName, Status)",
+      "PowerShell(Get-Process | Where-Object { $_.Name -match \"mysql|httpd|xampp\" } | Select-Object Name, Id)",
+      "PowerShell(& \"C:\\\\xampp\\\\xampp-control.exe\" 2>&1; Start-Sleep -Seconds 3; Get-Process | Where-Object { $_.Name -match \"mysqld\" })"
+    ]
+  }
+}

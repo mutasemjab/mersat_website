@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use App\Models\Service;
 
 /**
  * A client we worked for: cover card on the website + description + gallery of the work (PortfolioMedia).
@@ -16,9 +17,14 @@ class PortfolioItem extends Model
 
     public array $translatable = ['tag', 'title', 'description'];
 
-    protected $fillable = ['tag', 'title', 'description', 'image', 'video', 'url', 'sort_order', 'is_active'];
+    protected $fillable = ['service_id', 'tag', 'title', 'description', 'image', 'video', 'url', 'sort_order', 'is_active'];
 
     protected $casts = ['is_active' => 'boolean'];
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
 
     public function media()
     {

@@ -81,19 +81,56 @@
       </div>
     </div>
 
-    <div class="srv-grid">
+    <div class="srv4-grid">
       @foreach($services as $service)
-      <article class="srv-card r" style="--d:{{ ($loop->index % 5) * 70 }}ms">
-        <span class="srv-num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
-        <div class="srv-icon">
-          @if($service->image_url)
-          <img src="{{ $service->image_url }}" alt="">
-          @else
-          @include('front.partials.service-icon', ['icon' => $service->icon])
-          @endif
+      <article class="srv4-card r" style="--d:{{ $loop->index * 120 }}ms">
+
+        {{-- ── Card header ── --}}
+        <div class="srv4-head">
+          <div class="srv4-top-row">
+            <span class="srv4-num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+            <div class="srv4-icon">
+              @if($service->image_url)
+              <img src="{{ $service->image_url }}" alt="">
+              @else
+              @include('front.partials.service-icon', ['icon' => $service->icon])
+              @endif
+            </div>
+          </div>
+          <h3 class="srv4-title">{{ $service->title }}</h3>
+          <p class="srv4-desc">{{ $service->description }}</p>
         </div>
-        <h3>{{ $service->title }}</h3>
-        <p>{{ $service->description }}</p>
+
+        {{-- ── Portfolio works strip ── --}}
+        @if($service->portfolioItems->isNotEmpty())
+        <div class="srv4-works">
+          <div class="srv4-strip">
+            @foreach($service->portfolioItems as $work)
+            @if($work->url)
+            <a href="{{ $work->url }}" target="_blank" rel="noopener noreferrer"
+               class="srv4-thumb" title="{{ $work->title }}">
+            @else
+            <span class="srv4-thumb srv4-thumb--nolink" title="{{ $work->title }}">
+            @endif
+              @if($work->image_url)
+              <img src="{{ $work->image_url }}" alt="{{ $work->title }}" loading="lazy">
+              @endif
+              @if($work->url)
+              <span class="srv4-overlay">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                <small>{{ $work->title }}</small>
+              </span>
+              @endif
+            @if($work->url)
+            </a>
+            @else
+            </span>
+            @endif
+            @endforeach
+          </div>
+        </div>
+        @endif
+
       </article>
       @endforeach
     </div>

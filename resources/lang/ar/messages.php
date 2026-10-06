@@ -145,6 +145,7 @@ return [
         'phone'         => 'الهاتف',
         'business_name' => 'اسم النشاط التجاري',
         'service'       => 'الخدمة المطلوبة',
+        'service_id'    => 'الخدمة',
         'message'       => 'الرسالة',
     ],
 

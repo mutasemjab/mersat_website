@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use App\Models\PortfolioItem;
 
 class Service extends Model
 {
@@ -23,6 +24,11 @@ class Service extends Model
     public function getImageUrlAttribute(): ?string
     {
         return media_url($this->image, self::IMAGE_FOLDER);
+    }
+
+    public function portfolioItems()
+    {
+        return $this->hasMany(PortfolioItem::class)->where('is_active', true)->orderBy('sort_order')->orderBy('id');
     }
 
     public function scopeActive($query)

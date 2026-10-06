@@ -145,6 +145,7 @@ return [
         'phone'         => 'Phone',
         'business_name' => 'Business name',
         'service'       => 'Service needed',
+        'service_id'    => 'Service',
         'message'       => 'Message',
     ],
 

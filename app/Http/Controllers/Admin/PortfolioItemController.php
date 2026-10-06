@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\PortfolioItem;
 use App\Models\PortfolioMedia;
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -37,7 +38,26 @@ class PortfolioItemController extends BaseCrudController
 
     protected function rules(): array
     {
-        return ['url' => 'nullable|url|max:500'];
+        return [
+            'service_id' => 'nullable|exists:services,id',
+            'url'        => 'nullable|url|max:500',
+        ];
+    }
+
+    public function create()
+    {
+        $item = new PortfolioItem(['is_active' => true, 'sort_order' => (int) PortfolioItem::max('sort_order') + 1]);
+        $services = Service::active()->ordered()->get();
+
+        return view('admin.crud.create', $this->meta() + ['item' => $item, 'services' => $services]);
+    }
+
+    public function edit(int $id)
+    {
+        $item = PortfolioItem::with('media')->findOrFail($id);
+        $services = Service::active()->ordered()->get();
+
+        return view('admin.crud.edit', $this->meta() + ['item' => $item, 'services' => $services]);
     }
 
     protected function extraRules(): array

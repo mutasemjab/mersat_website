@@ -1,3 +1,15 @@
+@if(!empty($services) && $services->isNotEmpty())
+<div class="mb-3">
+    <label class="form-label fw-semibold">{{ __('messages.field.service_id') }}</label>
+    <select name="service_id" class="form-select">
+        <option value="">— بدون خدمة —</option>
+        @foreach($services as $srv)
+        <option value="{{ $srv->id }}" @selected(old('service_id', $item->service_id) == $srv->id)>{{ $srv->title }}</option>
+        @endforeach
+    </select>
+</div>
+@endif
+
 <x-admin.tr-input name="title" :label="__('messages.client_name')" :values="$item->getTranslations('title')" />
 <x-admin.tr-input name="tag" :label="__('messages.field.tag')" :values="$item->getTranslations('tag')" />
 <x-admin.tr-input name="description" type="textarea" :rows="5" :required="false" :label="__('messages.client_description')" :values="$item->getTranslations('description')" />
