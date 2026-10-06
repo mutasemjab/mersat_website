@@ -126,7 +126,7 @@ abstract class BaseCrudController extends Controller
 
     // ------------------------------------------------------------------
 
-    private function meta(): array
+    protected function meta(): array
     {
         return [
             'view'     => $this->view,

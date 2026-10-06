@@ -29,7 +29,7 @@ class HomeController extends Controller
             'workMedia'      => PortfolioMedia::with('item')->whereHas('item', fn ($q) => $q->active())->latest('id')->take(self::HOME_WORK)->get(),
             'clientLogos'    => ClientLogo::active()->ordered()->get(),
             'tickerItems'    => TickerItem::active()->ordered()->get(),
-            'services'       => Service::active()->ordered()->with('portfolioItems')->get(),
+            'services'       => Service::active()->ordered()->get(),
             'portfolioItems' => PortfolioItem::active()->ordered()->take(self::HOME_CLIENTS)->get(),
             'stats'          => Stat::active()->ordered()->get(),
             'locations'      => Location::active()->ordered()->get(),
