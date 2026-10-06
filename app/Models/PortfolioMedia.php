@@ -13,7 +13,7 @@ class PortfolioMedia extends Model
 
     protected $table = 'portfolio_media';
 
-    protected $fillable = ['portfolio_item_id', 'type', 'path', 'sort_order'];
+    protected $fillable = ['portfolio_item_id', 'type', 'path', 'link', 'sort_order'];
 
     public function item()
     {

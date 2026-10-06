@@ -584,7 +584,8 @@ html[dir="rtl"] .page-title i { margin-right: 0 !important; margin-left: .25rem;
 
 /* Client gallery (portfolio form) */
 .gallery-admin { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .75rem; }
-.gallery-admin-item { display: flex; flex-direction: column; gap: .4rem; padding: .4rem; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
+.gallery-admin-item { display: flex; flex-direction: column; gap: .4rem; padding: .4rem; border: 1px solid var(--border); border-radius: 8px; }
+.gallery-admin-url { font-size: 11px !important; padding: 3px 6px !important; border-radius: 4px !important; }
 .gallery-admin-item img,
 .gallery-admin-item video,
 .gallery-admin-embed { width: 100%; height: 90px; object-fit: cover; border-radius: 6px; background: #0f172a; }

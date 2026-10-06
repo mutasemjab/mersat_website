@@ -38,7 +38,7 @@
 @if ($item->exists && $item->media->isNotEmpty())
 <div class="gallery-admin mb-3">
     @foreach ($item->media as $media)
-    <label class="gallery-admin-item">
+    <div class="gallery-admin-item">
         @if ($media->type === 'image')
             <img src="{{ $media->url }}" alt="">
         @elseif ($media->embed_url)
@@ -46,11 +46,15 @@
         @else
             <video src="{{ $media->url }}" muted preload="metadata"></video>
         @endif
-        <span class="form-check small mb-0">
+        <input type="url" name="media_link[{{ $media->id }}]"
+               value="{{ old('media_link.' . $media->id, $media->link) }}"
+               placeholder="https://رابط-الموقع.com" dir="ltr"
+               class="form-control form-control-sm gallery-admin-url mt-1">
+        <span class="form-check small mb-0 mt-1">
             <input type="checkbox" class="form-check-input" name="remove_media[]" value="{{ $media->id }}">
             <span class="form-check-label text-danger">{{ __('messages.Delete') }}</span>
         </span>
-    </label>
+    </div>
     @endforeach
 </div>
 @endif

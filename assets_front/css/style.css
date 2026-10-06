@@ -1400,6 +1400,35 @@ body.menu-open {
     color: var(--p-500);
 }
 
+/* ── Website link button on work items ── */
+.work-visit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--p-500);
+    text-decoration: none;
+    transition: color .25s, gap .25s;
+}
+
+.work-visit-btn svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    transition: transform .25s;
+}
+
+.work-visit-btn:hover {
+    color: var(--p);
+    gap: 9px;
+}
+
+.work-visit-btn:hover svg {
+    transform: translate(2px, -2px);
+}
+
 /* ═══ ABOUT ═══ */
 .about-grid {
     display: grid;

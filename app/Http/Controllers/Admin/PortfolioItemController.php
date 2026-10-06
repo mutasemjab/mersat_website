@@ -80,6 +80,11 @@ class PortfolioItemController extends BaseCrudController
             $media->delete();
         }
 
+        // Save individual website links for each gallery image
+        foreach ((array) $request->input('media_link', []) as $mediaId => $link) {
+            $item->media()->where('id', (int) $mediaId)->update(['link' => $link ?: null]);
+        }
+
         $order = (int) $item->media()->max('sort_order');
 
         // Uploaded images / videos

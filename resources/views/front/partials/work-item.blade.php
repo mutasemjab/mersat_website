@@ -3,6 +3,7 @@
     $kind = $media->type === 'image' ? 'image' : ($media->embed_url ? 'embed' : 'video');
     $src = $kind === 'embed' ? $media->embed_url : $media->url;
     $caption = $caption ?? '';
+    $mediaLink = $media->link ?? null;
 @endphp
 <figure class="work-item r" data-kind="{{ $kind === 'image' ? 'photo' : 'video' }}">
   <button type="button" class="work-thumb {{ $kind !== 'image' ? 'is-video' : '' }}" data-lightbox data-type="{{ $kind }}" data-src="{{ $src }}" data-caption="{{ $caption }}" aria-label="{{ $caption ?: __('front.client_work') }}">
@@ -19,6 +20,12 @@
       <span class="zoom-badge"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
     @endif
   </button>
+  @if($mediaLink)
+  <a href="{{ $mediaLink }}" target="_blank" rel="noopener noreferrer" class="work-visit-btn" title="{{ __('front.visit_website') }}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    <span>{{ __('front.visit_website') }}</span>
+  </a>
+  @endif
   @isset($clientLink)
   <figcaption><a href="{{ $clientLink }}">{{ $caption }}</a></figcaption>
   @endisset
