@@ -7,6 +7,7 @@
 @php
     $photos = $client->media->where('type', 'image')->count();
     $videos = $client->media->count() - $photos;
+    $hasFilters = $photos > 0 && $videos > 0;
 @endphp
 
 <header class="client-hero">
@@ -32,8 +33,6 @@
       <aside class="client-facts r">
         <dl>
           <div><dt>{{ __('front.fact_field') }}</dt><dd>{{ $client->tag }}</dd></div>
-          @if($photos)<div><dt>{{ __('front.filter_photos') }}</dt><dd>{{ $photos }}</dd></div>@endif
-          @if($videos)<div><dt>{{ __('front.filter_videos') }}</dt><dd>{{ $videos }}</dd></div>@endif
         </dl>
         @if($client->url)
         <a href="{{ $client->url }}" class="btn btn-primary btn-block" target="_blank" rel="noopener">
@@ -46,7 +45,7 @@
 
     <div class="sec-head sec-head-split client-work-head">
       <h2 class="sec-title sec-title-sm">{{ __('front.client_work') }}</h2>
-      @if($photos && $videos)
+      @if($hasFilters)
       <div class="filter-tabs" role="tablist">
         <button type="button" class="is-active" data-filter="all">{{ __('front.filter_all') }}</button>
         <button type="button" data-filter="photo">{{ __('front.filter_photos') }}</button>

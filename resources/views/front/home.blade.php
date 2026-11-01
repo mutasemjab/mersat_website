@@ -9,7 +9,12 @@
     @foreach ($slides as $slide)
     <div class="hero-slide {{ $loop->first ? 'is-active' : '' }}" aria-hidden="{{ $loop->first ? 'false' : 'true' }}">
       @if ($slide['image'])
-      <img src="{{ $slide['image'] }}" alt="" @if(!$loop->first) loading="lazy" @else fetchpriority="high" @endif>
+      <picture>
+        @if($slide['mobile_image'])
+        <source srcset="{{ $slide['mobile_image'] }}" media="(max-width: 640px)">
+        @endif
+        <img src="{{ $slide['image'] }}" alt="" @if(!$loop->first) loading="lazy" @else fetchpriority="high" @endif>
+      </picture>
       @endif
       @if ($slide['video'])
       <video muted loop playsinline preload="{{ $loop->first ? 'auto' : 'none' }}" @if($slide['image']) poster="{{ $slide['image'] }}" @endif><source src="{{ $slide['video'] }}"></video>
@@ -54,6 +59,69 @@
   @endif
 </section>
 
+{{-- ═══ ABOUT ═══ --}}
+<section id="about" class="section">
+  <div class="container about-grid">
+    @php $aboutVideo = setting_media('about_video'); $aboutPoster = setting_media('about_poster'); @endphp
+    <div class="about-media r">
+      <div class="about-frame">
+        @if($aboutPoster)<img src="{{ $aboutPoster }}" alt="{{ setting('about_label') }}" loading="lazy">@endif
+        @if($aboutVideo)
+        <video autoplay muted loop playsinline preload="metadata" @if($aboutPoster) poster="{{ $aboutPoster }}" @endif><source src="{{ $aboutVideo }}"></video>
+        @endif
+      </div>
+      <div class="about-badge">
+        <b dir="ltr">{{ setting('about_badge_number') }}</b>
+        <span>{{ setting('about_badge_line1') }}<br>{{ setting('about_badge_line2') }}</span>
+      </div>
+    </div>
+
+    <div class="about-copy">
+      <p class="eyebrow r">{{ setting('about_label') }}</p>
+      <h2 class="sec-title r">{{ setting('about_title_1') }} <em>{{ setting('about_title_2') }}</em></h2>
+      <p class="lead r">{{ setting('about_text_1') }}</p>
+      <p class="r">{{ setting('about_text_2') }}</p>
+      <p class="about-countries r">{{ setting('about_countries') }}</p>
+
+      @if($stats->isNotEmpty())
+      <div class="stats r">
+        @foreach($stats as $stat)
+        <div class="stat">
+          <div class="stat-n" dir="ltr"><span data-count="{{ $stat->value }}">{{ $stat->value }}</span>{{ $stat->suffix }}</div>
+          <div class="stat-l">{{ $stat->label }}</div>
+        </div>
+        @endforeach
+      </div>
+      @endif
+    </div>
+  </div>
+</section>
+
+{{-- ═══ WORLDWIDE ═══ --}}
+<section id="global" class="section section-dark">
+  {{-- Heading, text and map share the wide column; the countries list sits beside them --}}
+  <div class="container global-grid">
+    <div class="global-main">
+      <div class="global-copy">
+        <p class="eyebrow r">{{ setting('global_label') }}</p>
+        <h2 class="sec-title r">{{ setting('global_title_1') }} <em>{{ setting('global_title_2') }}</em></h2>
+        <p class="r">{{ setting('global_text') }}</p>
+      </div>
+      <div class="world-map-wrap r">
+        @include('front.partials.world-map')
+      </div>
+    </div>
+    <ul class="locations r">
+      @foreach($locations as $loc)
+      <li class="g-loc" data-cc="{{ $loc->country_code }}">
+        <span class="g-dot"></span>
+        <span><b>{{ $loc->city }}</b><small>{{ $loc->description }}</small></span>
+      </li>
+      @endforeach
+    </ul>
+  </div>
+</section>
+
 {{-- ═══ TICKER ═══ --}}
 @if($tickerItems->isNotEmpty())
 <div class="ticker" aria-hidden="true">
@@ -94,6 +162,10 @@
         </div>
         <h3>{{ $service->title }}</h3>
         <p>{{ $service->description }}</p>
+        <a href="{{ route('service.show', $service->id) }}" class="srv-learn">
+          {{ __('front.service_learn') }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       </article>
       @endforeach
     </div>
@@ -191,68 +263,7 @@
 </section>
 @endif
 
-{{-- ═══ ABOUT ═══ --}}
-<section id="about" class="section">
-  <div class="container about-grid">
-    @php $aboutVideo = setting_media('about_video'); $aboutPoster = setting_media('about_poster'); @endphp
-    <div class="about-media r">
-      <div class="about-frame">
-        @if($aboutPoster)<img src="{{ $aboutPoster }}" alt="{{ setting('about_label') }}" loading="lazy">@endif
-        @if($aboutVideo)
-        <video autoplay muted loop playsinline preload="metadata" @if($aboutPoster) poster="{{ $aboutPoster }}" @endif><source src="{{ $aboutVideo }}"></video>
-        @endif
-      </div>
-      <div class="about-badge">
-        <b dir="ltr">{{ setting('about_badge_number') }}</b>
-        <span>{{ setting('about_badge_line1') }}<br>{{ setting('about_badge_line2') }}</span>
-      </div>
-    </div>
 
-    <div class="about-copy">
-      <p class="eyebrow r">{{ setting('about_label') }}</p>
-      <h2 class="sec-title r">{{ setting('about_title_1') }} <em>{{ setting('about_title_2') }}</em></h2>
-      <p class="lead r">{{ setting('about_text_1') }}</p>
-      <p class="r">{{ setting('about_text_2') }}</p>
-      <p class="about-countries r">{{ setting('about_countries') }}</p>
-
-      @if($stats->isNotEmpty())
-      <div class="stats r">
-        @foreach($stats as $stat)
-        <div class="stat">
-          <div class="stat-n" dir="ltr"><span data-count="{{ $stat->value }}">{{ $stat->value }}</span>{{ $stat->suffix }}</div>
-          <div class="stat-l">{{ $stat->label }}</div>
-        </div>
-        @endforeach
-      </div>
-      @endif
-    </div>
-  </div>
-</section>
-
-{{-- ═══ WORLDWIDE ═══ --}}
-<section id="global" class="section section-dark">
-  {{-- Heading, text and map share the wide column; the countries list sits beside them --}}
-  <div class="container global-grid">
-    <div class="global-main">
-      <div class="global-copy">
-        <p class="eyebrow r">{{ setting('global_label') }}</p>
-        <h2 class="sec-title r">{{ setting('global_title_1') }} <em>{{ setting('global_title_2') }}</em></h2>
-        <p class="r">{{ setting('global_text') }}</p>
-      </div>
-      <div class="world-map-wrap r">
-        @include('front.partials.world-map')
-      </div>
-    </div>
-    <ul class="locations r">
-      @foreach($locations as $loc)
-      <li class="g-loc" data-cc="{{ $loc->country_code }}">
-        <span class="g-dot"></span>
-        <span><b>{{ $loc->city }}</b><small>{{ $loc->description }}</small></span>
-      </li>
-      @endforeach
-    </ul>
-  </div>
-</section>
 
 {{-- ═══ CONTACT ═══ --}}
 @php

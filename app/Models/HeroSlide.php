@@ -17,13 +17,18 @@ class HeroSlide extends Model
 
     public array $translatable = ['kicker', 'title', 'highlight', 'subtitle'];
 
-    protected $fillable = ['kicker', 'title', 'highlight', 'subtitle', 'image', 'video', 'sort_order', 'is_active'];
+    protected $fillable = ['kicker', 'title', 'highlight', 'subtitle', 'image', 'mobile_image', 'video', 'sort_order', 'is_active'];
 
     protected $casts = ['is_active' => 'boolean'];
 
     public function getImageUrlAttribute(): ?string
     {
         return media_url($this->image, self::FOLDER);
+    }
+
+    public function getMobileImageUrlAttribute(): ?string
+    {
+        return media_url($this->mobile_image, self::FOLDER);
     }
 
     public function getVideoUrlAttribute(): ?string

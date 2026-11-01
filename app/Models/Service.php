@@ -15,9 +15,9 @@ class Service extends Model
     /** Built-in icons (drawn in resources/views/front/partials/service-icon.blade.php). */
     public const ICONS = ['camera', 'star', 'grid', 'chart', 'search', 'browser', 'growth', 'hexagon', 'package', 'print'];
 
-    public array $translatable = ['title', 'description'];
+    public array $translatable = ['title', 'description', 'content'];
 
-    protected $fillable = ['title', 'description', 'icon', 'image', 'sort_order', 'is_active'];
+    protected $fillable = ['title', 'description', 'content', 'icon', 'image', 'sort_order', 'is_active'];
 
     protected $casts = ['is_active' => 'boolean'];
 

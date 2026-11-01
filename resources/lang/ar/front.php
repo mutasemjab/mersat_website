@@ -75,4 +75,8 @@ return [
     'logos_title'     => 'علامات تجارية',
     'logos_title_hl'  => 'تثق بنا.',
 
+    // Service pages
+    'services_label'  => 'خدماتنا',
+    'service_learn'   => 'اعرف أكثر',
+
 ];

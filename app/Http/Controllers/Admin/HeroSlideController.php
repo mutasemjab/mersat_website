@@ -26,8 +26,9 @@ class HeroSlideController extends BaseCrudController
     ];
 
     protected array $media = [
-        'image' => ['folder' => HeroSlide::FOLDER, 'kind' => 'image', 'required' => true],
-        'video' => ['folder' => HeroSlide::FOLDER, 'kind' => 'video'],
+        'image'        => ['folder' => HeroSlide::FOLDER, 'kind' => 'image', 'required' => true],
+        'mobile_image' => ['folder' => HeroSlide::FOLDER, 'kind' => 'image'],
+        'video'        => ['folder' => HeroSlide::FOLDER, 'kind' => 'video'],
     ];
 
     protected function rules(): array

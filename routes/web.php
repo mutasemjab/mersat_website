@@ -13,6 +13,7 @@ Route::group([
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio.index');
     Route::get('/portfolio/{id}', [HomeController::class, 'client'])->whereNumber('id')->name('portfolio.show');
+    Route::get('/services/{id}', [HomeController::class, 'service'])->whereNumber('id')->name('service.show');
     Route::post('/contact', [HomeController::class, 'contact'])->middleware('throttle:6,1')->name('contact.store');
 
 });

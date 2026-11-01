@@ -48,16 +48,28 @@ class HomeController extends Controller
         ];
 
         $slides = HeroSlide::active()->ordered()->get()->map(fn (HeroSlide $s) => [
-            'image'     => $s->image_url,
-            'video'     => $s->video_url,
-            'kicker'    => $s->kicker ?: $default['kicker'],
-            'title'     => $s->title ?: $default['title'],
-            'highlight' => $s->highlight ?: ($s->title ? '' : $default['highlight']),
-            'subtitle'  => $s->subtitle ?: $default['subtitle'],
+            'image'        => $s->image_url,
+            'mobile_image' => $s->mobile_image_url,
+            'video'        => $s->video_url,
+            'kicker'       => $s->kicker ?: $default['kicker'],
+            'title'        => $s->title ?: $default['title'],
+            'highlight'    => $s->highlight ?: ($s->title ? '' : $default['highlight']),
+            'subtitle'     => $s->subtitle ?: $default['subtitle'],
         ])->all();
 
         // No slides yet: a single slide from the hero image / video of the settings
-        return $slides ?: [$default + ['image' => setting_media('hero_poster'), 'video' => setting_media('hero_video')]];
+        return $slides ?: [$default + ['image' => setting_media('hero_poster'), 'mobile_image' => null, 'video' => setting_media('hero_video')]];
+    }
+
+    /** Single service page. */
+    public function service(int $id)
+    {
+        $service = Service::active()->findOrFail($id);
+
+        return view('front.service', [
+            'service'     => $service,
+            'socialLinks' => SocialLink::active()->ordered()->get(),
+        ]);
     }
 
     /** All clients. */

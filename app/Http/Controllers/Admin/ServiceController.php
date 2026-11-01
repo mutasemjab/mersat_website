@@ -19,6 +19,7 @@ class ServiceController extends BaseCrudController
     protected array $translatableRules = [
         'title'       => 'required|string|max:150',
         'description' => 'required|string|max:500',
+        'content'     => 'nullable|string|max:100000',
     ];
 
     protected array $media = [

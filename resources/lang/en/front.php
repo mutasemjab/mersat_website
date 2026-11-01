@@ -75,4 +75,8 @@ return [
     'logos_title'     => 'Brands that',
     'logos_title_hl'  => 'trust us.',
 
+    // Service pages
+    'services_label'  => 'Our Services',
+    'service_learn'   => 'Learn More',
+
 ];

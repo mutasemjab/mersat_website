@@ -7,6 +7,10 @@
     file="image" link="image_link" remove="remove_image"
     :value="$item->getRawOriginal('image')" :url="$item->image_url" />
 
+<x-admin.media-input label="صورة الموبايل (اختياري — تُعرض بدلاً من الصورة الرئيسية على الشاشات الصغيرة)" kind="image" :required="false"
+    file="mobile_image" link="mobile_image_link" remove="remove_mobile_image"
+    :value="$item->getRawOriginal('mobile_image')" :url="$item->mobile_image_url" />
+
 <x-admin.media-input :label="__('messages.slide_video')" kind="video"
     file="video" link="video_link" remove="remove_video"
     :value="$item->getRawOriginal('video')" :url="$item->video_url" />
